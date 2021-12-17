@@ -3,17 +3,18 @@ const { Player, Human, AI } = require("./players");
 
 class Game {
     constructor() {
-        this.playerOne = new Human("sabrina");
-        this.playerTwo = new Human("Michelle");
+        this.playerOne;
+        this.playerTwo;
         this.gestures = [];
     }
     runGame() {
+        this.gameSetup();
         this.startGame();
 
-        console.log(this.playerOne);
+        //console.log(this.playerOne);
         while (this.playerOne.score < 2 && this.playerTwo.score < 2) {
-            this.playerOne.humansPick()
-            this.playerTwo.humansPick()
+            this.playerOne.getRandomChoice();
+            this.playerTwo.getRandomChoice();
             //console.log(this.playerOne);
             //console.log(this.playerTwo);
 
@@ -95,6 +96,22 @@ class Game {
         else {
             console.log(this.playerTwo.name + " " + "wins the game!");
             console.log(this.playerTwo.score);
+        }
+    }
+    gameSetup() {
+        let newName = prompt("what is your name?");
+        this.playerOne = new Human(newName)
+        let opponentType = prompt("Are you playing against the AI or another human?");
+        if (opponentType == "human") {
+            let playerTwoName = prompt("what is your name?");
+            this.playerTwo = new Human(playerTwoName);
+        }
+        else if (opponentType == "AI") {
+            this.playerTwo = new AI("Bot")
+
+        }
+        else {
+            console.log("Please choose an available option.");
         }
     }
 }
